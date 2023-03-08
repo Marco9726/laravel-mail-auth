@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
 	//variabile fillable
-	protected $fillable = ['title', 'description', 'slug', 'type_id', 'technology_id'];
+	protected $fillable = ['title', 'description', 'slug', 'type_id', 'technology_id', 'cover_image'];
 	use HasFactory;
 	//funzione per generare lo slug
 	public static function generateSlug($title)

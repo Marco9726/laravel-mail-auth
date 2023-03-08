@@ -9,6 +9,7 @@ use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -50,6 +51,14 @@ class ProjectController extends Controller
 		$form_data['slug'] = $slug;
 
 		$newProject = new Project();
+
+		//controlliamo prima del fill se è presente l'indice per salvarci il path da salvare una volta eseguito l'upload
+		if ($request->has('cover_image')) {
+			$path = Storage::disk('public')->put('project_images', $request->cover_image);
+
+			$form_data['cover_image'] = $path;
+		}
+
 		$newProject->fill($form_data);
 
 		$newProject->save();
@@ -59,6 +68,7 @@ class ProjectController extends Controller
 		if ($request->has('technologies')) {
 			$newProject->technologies()->attach($request->technologies);
 		}
+
 		return redirect()->route('admin.projects.index')->with('message', 'Progetto creato correttamente'); //passo alla view anche la variabile message
 	}
 

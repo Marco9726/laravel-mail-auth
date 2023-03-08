@@ -1,0 +1,57 @@
+@use '../partials/variables' as *;
+
+i.fa-brands {
+	font-size: 2rem;
+
+	&.fa-html5 {
+		color: $html-color;
+	}
+
+	&.fa-css3-alt {
+		color: $css-color;
+	}
+
+	&.fa-js {
+		color: $js-color;
+	}
+
+	&.fa-vuejs {
+		color: $vue-color;
+	}
+
+	&.fa-php {
+		color: $php-color;
+	}
+
+	&.fa-laravel {
+		color: $laravel-color;
+	}
+}
+
+hr {
+	border-bottom: none;
+}
+
+.html-border {
+	border: 1px solid $html-color;
+}
+
+.css-border {
+	border: 1px solid $css-color;
+}
+
+.javascript-border {
+	border: 1px solid $js-color;
+}
+
+.vue-border {
+	border: 1px solid $vue-color;
+}
+
+.php-border {
+	border: 1px solid $php-color;
+}
+
+.laravel-border {
+	border: 1px solid $laravel-color;
+}

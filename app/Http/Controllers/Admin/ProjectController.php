@@ -51,7 +51,6 @@ class ProjectController extends Controller
 		//Aggiungo una coppia chiave = valore all'array form_data
 		$form_data['slug'] = $slug;
 
-
 		//controlliamo prima del fill se è presente l'indice per salvarci il path da salvare una volta eseguito l'upload
 		if ($request->has('cover_image')) {
 			$path = Storage::disk('public')->put('project_images', $request->cover_image);

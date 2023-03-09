@@ -42,6 +42,10 @@
 				{{-- UPLOAD COVER_IMAGE --}}
 				<div class="form-group my-3">
 					<label for="inputFileImg" class="control-label mb-1 @error('cover_image')text-danger @enderror">Immagine di copertina</label>
+					{{-- mostro l'immagine attualmente associata al progetto --}}
+					<div class="mb-3">
+						<img src="{{ asset( 'storage/'.$project->cover_image )}}" alt="" class="w-50">
+					</div>
 					<input id="inputFileImg" type="file" name="cover_image" class="form-control @error('cover_image')is-invalid @enderror">
 				</div>
 				{{-- TECHNOLOGIES  --}}

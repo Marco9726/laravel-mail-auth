@@ -22,7 +22,7 @@
 		</div>
 		@endif
 		<div class="col-12">
-			<form action="{{ route('admin.projects.store')}}" method="POST" enctype="multiplart/form-data">
+			<form action="{{ route('admin.projects.store')}}" method="POST" enctype="multipart/form-data">
 				@csrf
 				{{-- TITLE --}}
 				<div class="form-group">

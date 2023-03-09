@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -44,13 +44,13 @@ class ProjectController extends Controller
 	 */
 	public function store(StoreProjectRequest $request)
 	{
+		// Recupero i dati validati dalla richiesta
 		$form_data = $request->validated();
 
 		$slug = Project::generateSlug($request->title); //richiamo la funzione creata nel model per generare lo slug
 		//Aggiungo una coppia chiave = valore all'array form_data
 		$form_data['slug'] = $slug;
 
-		$newProject = new Project();
 
 		//controlliamo prima del fill se è presente l'indice per salvarci il path da salvare una volta eseguito l'upload
 		if ($request->has('cover_image')) {
@@ -59,11 +59,8 @@ class ProjectController extends Controller
 			$form_data['cover_image'] = $path;
 		}
 
-		$newProject->fill($form_data);
-
-		$newProject->save();
-		//QUESTE TRE OPERAZIONE CORRISPONDONO A:
-		// $newProject = Project::create($form_data); 
+		// Creo e salvo un nuovo progetto nel db utilizzando i datipassati dal form
+		$newProject = Project::create($form_data);
 
 		if ($request->has('technologies')) {
 			$newProject->technologies()->attach($request->technologies);
@@ -131,7 +128,7 @@ class ProjectController extends Controller
 	public function destroy(Project $project)
 	{
 		//!-1):CANCELLARE PRIMA I RECORD NELLA TABELLA PIVOT (funzione già svolta dai metodi cascateOnDelete() dichiaricati nella migrations della tabella pivot)
-		$project->technologies->sync([]);
+		// $project->technologies->sync([]);
 
 		$project->delete();
 

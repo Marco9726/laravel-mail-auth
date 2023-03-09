@@ -20,7 +20,7 @@
 		</div>
 		@endif
 		<div class="col-12">
-			<form action="{{ route('admin.projects.update', $project->slug)}}" method="POST">
+			<form action="{{ route('admin.projects.update', $project->slug)}}" method="POST" enctype="multiplart/form-data">
 				@csrf
 				@method('PUT')
 				{{-- TITLE --}}
@@ -38,6 +38,11 @@
 							<option value="{{ $type->id }}" {{ $type->id == old('type_id', $project->type_id) ? 'selected' : ''}}>{{ $type->name }}</option>
 						@endforeach
 					</select>
+				</div>
+				{{-- UPLOAD COVER_IMAGE --}}
+				<div class="form-group my-3">
+					<label for="inputFileImg" class="control-label mb-1 @error('cover_image')text-danger @enderror">Immagine di copertina</label>
+					<input id="inputFileImg" type="file" name="cover_image" class="form-control @error('cover_image')is-invalid @enderror">
 				</div>
 				{{-- TECHNOLOGIES  --}}
 				<div class="form-group my-3">

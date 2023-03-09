@@ -11,6 +11,7 @@
 			<a href="{{ route('admin.projects.index')}}" class="btn btn-small btn-warning">Ritorna ai progetti</a>
 		</div>
 		<div class="col-12">
+			<img src="{{ asset('storage/' . $project->cover_image )}}" alt="{{ $project->title }}" class="w-50">
 			<p><strong>Slug: </strong>{{ $project->slug }}</p>
 			<p><strong>Linguaggio: </strong>{{ $project->type ? $project->type->name : 'Non specificato' }}</p>
 			<p><strong>Tecnologie: </strong>

@@ -52,7 +52,8 @@ class ProjectController extends Controller
 		$form_data['slug'] = $slug;
 
 		//controlliamo prima del fill se è presente l'indice per salvarci il path da salvare una volta eseguito l'upload
-		if ($request->has('cover_image')) {
+		if ($request->hasFile('cover_image')) {
+			// inseriamo l'immagine nella cartella 'project_images', nella cartella public di storage
 			$path = Storage::disk('public')->put('project_images', $request->cover_image);
 
 			$form_data['cover_image'] = $path;
@@ -102,11 +103,25 @@ class ProjectController extends Controller
 	 */
 	public function update(UpdateProjectRequest $request, Project $project)
 	{
+		// Recupero i dati validati dalla richiesta
 		$form_data = $request->validated();
 		//richiamo la funzione per generare lo slug creata nel Model, passando il title come parametro
 		$slug = Project::generateSlug($request->title, '-');
 
 		$form_data['slug'] = $slug;
+
+		//controlliamo prima dell'update se è presente l'indice per salvarci il path da salvare una volta eseguito l'upload
+		if ($request->hasFile('cover_image')) {
+			//se il progetto ha una cover_image (diversa da null)
+			if ($project->cover_image) {
+				// cancelliamo la precedente immagine
+				Storage::delete($project->cover_image);
+			}
+			// inseriamo l'immagine nella cartella 'project_images', nella cartella public di storage
+			$path = Storage::disk('public')->put('project_images', $request->cover_image);
+
+			$form_data['cover_image'] = $path;
+		}
 
 		$project->update($form_data);
 

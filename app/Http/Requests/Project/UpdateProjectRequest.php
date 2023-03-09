@@ -28,7 +28,8 @@ class UpdateProjectRequest extends FormRequest
 			'title'       => ['required', Rule::unique('projects')->ignore($this->project), 'max:150'],
 			'description' => ['nullable'],
 			'type_id'     => ['nullable', 'exists:types,id'],
-			'technologies' => ['nullable', 'exists:technologies,id']
+			'technologies' => ['nullable', 'exists:technologies,id'],
+			'cover_image' => ['nullable', 'image']
 		];
 	}
 
@@ -39,7 +40,8 @@ class UpdateProjectRequest extends FormRequest
 			'title.unique' => 'Il titolo inserito è già esistente',
 			'title.max' => 'La lunghezza del titolo non può essere superiore a :max caratteri',
 			'type_id.exists' => 'La categoria selezionata non è valida',
-			'tyecgnologies.exists' => 'La tecnologia selezionata non è valida'
+			'tyecgnologies.exists' => 'La tecnologia selezionata non è valida',
+			'cover_image.image' => 'Inserire un formato immagine come file'
 		];
 	}
 }

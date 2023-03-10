@@ -1,15 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+// facades
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+// controller
 use App\Http\Controllers\Controller;
+// requests
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
+// models 
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
+use App\Models\Lead;
+// mail
+use App\Mail\NewContact;
 
 class ProjectController extends Controller
 {
@@ -65,6 +72,14 @@ class ProjectController extends Controller
 		if ($request->has('technologies')) {
 			$newProject->technologies()->attach($request->technologies);
 		}
+
+		$new_lead = new Lead();
+		$new_lead->title = $form_data['title'];
+		$new_lead->slug = $form_data['slug'];
+		$new_lead->description = $form_data['description'];
+		$new_lead->save();
+
+		Mail::to('info@boolpress.com')->send(new NewContact($new_lead));
 
 		return redirect()->route('admin.projects.index')->with('message', 'Progetto creato correttamente'); //passo alla view anche la variabile message
 	}
